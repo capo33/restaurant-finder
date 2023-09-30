@@ -1,0 +1,14 @@
+{
+  "name": "restaurant-finder",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "mohamed",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^5.2.2"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0"
+  }
+}
