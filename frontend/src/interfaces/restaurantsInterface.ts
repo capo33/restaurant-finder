@@ -6,6 +6,7 @@ export interface IRestaurants {
   restaurant_id: string;
   count: number;
   average_rating: number;
+  reviews: IReviews[];
 }
 
 export interface IReviews {
