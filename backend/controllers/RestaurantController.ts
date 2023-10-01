@@ -134,8 +134,37 @@ const deleteRestaurant = async (req: Request, res: Response) => {
     );
     res.status(200).json({
       status: "success",
+      // data: {
+      //   restaurant: restaurant["rows"][0],
+      // },
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message,
+      });
+    }
+  }
+};
+
+// @desc   Add a review
+// @route  POST /api/v1/restaurants/:id/addReview
+// @access Public
+const addReview = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { name, review, rating } = req.body;
+  try {
+    const newReview: QueryResult = await pool.query(
+      "INSERT INTO reviews (restaurant_id, name, review, rating) VALUES ($1, $2, $3, $4) RETURNING *;",
+      [id, name, review, rating]
+    );
+    res.status(201).json({
+      status: "success",
       data: {
-        restaurant: restaurant["rows"][0],
+        review: newReview["rows"][0],
       },
     });
   } catch (error) {
@@ -150,4 +179,69 @@ const deleteRestaurant = async (req: Request, res: Response) => {
   }
 };
 
-export { getRestaurants, getRestaurant, addRestaurant };
+// @desc   Update a review
+// @route  PUT /api/v1/restaurants/:id/updateReview
+// @access Public
+const updateReview = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const { name, review, rating } = req.body;
+  try {
+    const updatedReview: QueryResult = await pool.query(
+      "UPDATE reviews SET name = $1, review = $2, rating = $3 WHERE id = $4 RETURNING *;",
+      [name, review, rating, id]
+    );
+    res.status(200).json({
+      status: "success",
+      data: {
+        review: updatedReview["rows"][0],
+      },
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message,
+      });
+    }
+  }
+};
+
+// @desc   Delete a review
+// @route  DELETE /api/v1/restaurants/:id/deleteReview
+// @access Public
+const deleteReview = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const deletedReview: QueryResult = await pool.query(
+      "DELETE FROM reviews WHERE id = $1 RETURNING *;",
+      [id]
+    );
+    res.status(200).json({
+      status: "success",
+      // data: {
+      //   review: deletedReview["rows"][0],
+      // },
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message,
+      });
+    }
+  }
+};
+export {
+  getRestaurants,
+  getRestaurant,
+  addRestaurant,
+  updateRestaurant,
+  deleteRestaurant,
+  addReview,
+  updateReview,
+  deleteReview,
+};
