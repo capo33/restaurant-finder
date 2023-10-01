@@ -65,5 +65,32 @@ const getRestaurant = async (req: Request, res: Response) => {
   }
 };
 
- 
-export { getRestaurants, getRestaurant };
+// @desc   Add a restaurant
+// @route  POST /api/v1/restaurants
+// @access Public
+const addRestaurant = async (req: Request, res: Response) => {
+  const { name, location, price_range } = req.body;
+  try {
+    const restaurant: QueryResult = await pool.query(
+      "INSERT INTO restaurants (name, location, price_range) VALUES ($1, $2, $3) RETURNING *;",
+      [name, location, price_range]
+    );
+    res.status(201).json({
+      status: "success",
+      data: {
+        restaurant: restaurant["rows"][0],
+      },
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message,
+      });
+    }
+  }
+};
+
+export { getRestaurants, getRestaurant, addRestaurant };

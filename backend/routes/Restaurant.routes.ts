@@ -8,4 +8,6 @@ router.get("/", RestaurantController.getRestaurants);
 
 router.get("/:id", RestaurantController.getRestaurant);
 
+router.post("/", RestaurantController.addRestaurant);
+
 export default router;
