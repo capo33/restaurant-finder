@@ -6,4 +6,6 @@ const router = Router();
 
 router.get("/", RestaurantController.getRestaurants);
 
+router.get("/:id", RestaurantController.getRestaurant);
+
 export default router;
