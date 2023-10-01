@@ -4,12 +4,14 @@ import { Link, useParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch  } from "../redux/app/store";
 import { getSingleRestaurant } from '../redux/features/restaurantSlice';
 import { StarRatings } from '../components';
+import RestaurantReviews from './RestaurantReviews';
 
 const RestaurantDetails = () => {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
-  const { restaurant } = useAppSelector((state) => state.restaurants);
-console.log(restaurant);
+  const { restaurant, } = useAppSelector((state) => state.restaurants);
+
+  // console.log('restaurant', restaurant);
 
   useEffect(() => {
     dispatch(getSingleRestaurant(id as string));
@@ -38,8 +40,8 @@ console.log(restaurant);
         </div>
         <Link to='/'>Back</Link>
         <div className='mt-3'>
-          {/* {!restaurant?.reviews?.length && <h1>No Reviews Yet</h1>} */}
-          {/* <RestaurantReviews reviews={restaurant?.} /> */}
+          {!restaurant?.reviews?.length && <h1>No Reviews Yet</h1>}
+          <RestaurantReviews id={restaurant?.id} reviews={restaurant?.reviews} />
           {/* <AddReview /> */}
         </div>
       </>

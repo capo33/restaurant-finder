@@ -9,7 +9,7 @@ import { price_rating } from "../utils";
 
 const RestaurantList = () => {
   const { restaurants } = useAppSelector((state) => state.restaurants);
-  console.log(restaurants);
+  // console.log(restaurants);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -20,13 +20,13 @@ const RestaurantList = () => {
 
   // Render Rating component
   const renderRating = (restaurant: IRestaurants) => {
-    if (!restaurant.count) {
+    if (!restaurant?.count) {
       return <span className='text-warning'>0 reviews</span>;
     }
     return (
       <>
         <StarRating rating={restaurant?.id} />
-        <span className='text-muted ms-1'>({restaurant.count})</span>
+        <span className='text-muted ms-1'>({restaurant?.count})</span>
       </>
     );
   };
@@ -79,7 +79,7 @@ const RestaurantList = () => {
                   </td>
                   <td>
                     <button
-                      onClick={(e) => handleUpdateRestaurant(e, restaurant.id)}
+                      onClick={(e) => handleUpdateRestaurant(e, restaurant?.id)}
                       className='btn btn-warning btn-sm'
                     >
                       Update
@@ -91,7 +91,7 @@ const RestaurantList = () => {
                       <div title='restaurant with reviews cannot be deleted'>
                         <button
                           // onClick={(e) => {
-                          //   handleDelete(e, restaurant.id);
+                          //   handleDelete(e, restaurant?.restaurant?.restaurant.id);
                           // }}
                           className='btn btn-danger btn-sm'
                           disabled
@@ -102,7 +102,7 @@ const RestaurantList = () => {
                     ) : (
                       <button
                         // onClick={(e) => {
-                        //   handleDelete(e, restaurant.id);
+                        //   handleDelete(e, restaurant?.restaurant?.restaurant.id);
                         // }}
                         className='btn btn-danger btn-sm'
                       >
