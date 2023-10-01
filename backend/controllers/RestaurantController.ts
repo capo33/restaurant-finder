@@ -93,4 +93,61 @@ const addRestaurant = async (req: Request, res: Response) => {
   }
 };
 
+// @desc   Update a restaurant
+// @route  PUT /api/v1/restaurants/:id
+// @access Public
+const updateRestaurant = async (req: Request, res: Response) => {
+  const { name, location, price_range } = req.body;
+  const { id } = req.params;
+  try {
+    const restaurant: QueryResult = await pool.query(
+      "UPDATE restaurants SET name = $1, location = $2, price_range = $3 WHERE id = $4 RETURNING *;",
+      [name, location, price_range, id]
+    );
+    res.status(200).json({
+      status: "success",
+      data: {
+        restaurant: restaurant["rows"][0],
+      },
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message,
+      });
+    }
+  }
+};
+
+// @desc   Delete a restaurant
+// @route  DELETE /api/v1/restaurants/:id
+// @access Public
+const deleteRestaurant = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  try {
+    const restaurant: QueryResult = await pool.query(
+      "DELETE FROM restaurants WHERE id = $1 RETURNING *;",
+      [id]
+    );
+    res.status(200).json({
+      status: "success",
+      data: {
+        restaurant: restaurant["rows"][0],
+      },
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.message);
+      res.status(500).json({
+        success: false,
+        message: "Internal Server Error",
+        error: error.message,
+      });
+    }
+  }
+};
+
 export { getRestaurants, getRestaurant, addRestaurant };
