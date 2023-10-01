@@ -1,5 +1,5 @@
 -- Database
-CREATE DATABASE IF NOT EXISTS YelpClone;
+CREATE DATABASE IF NOT EXISTS YelpDB;
 
 -- Tables
 -- Restaurants Table

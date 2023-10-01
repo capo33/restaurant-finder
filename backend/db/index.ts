@@ -1,1 +1,1 @@
-export {default as pool} from './db';
+export { default as pool } from "./db";
