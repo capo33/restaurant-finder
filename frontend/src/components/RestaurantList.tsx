@@ -9,8 +9,7 @@ import { price_rating } from "../utils";
 
 const RestaurantList = () => {
   const { restaurants } = useAppSelector((state) => state.restaurants);
-  // console.log(restaurants);
-
+ 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -25,7 +24,7 @@ const RestaurantList = () => {
     }
     return (
       <>
-        <StarRating rating={restaurant?.id} />
+        <StarRating rating={restaurant?.average_rating} />
         <span className='text-muted ms-1'>({restaurant?.count})</span>
       </>
     );

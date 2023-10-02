@@ -5,22 +5,20 @@ import { StarRatings } from "../components";
 
 interface IRestaurantReviewsProps {
   reviews: IReviews[];
-  id: number | undefined;
+  something: string | undefined;
 }
 
-const RestaurantReviews = ({ reviews, id }: IRestaurantReviewsProps) => {
+const RestaurantReviews = ({ reviews  }: IRestaurantReviewsProps) => {
   const dispatch = useAppDispatch();
-
   // delete review
   const handleDelete = (id: string) => {
     dispatch(deleteReview(id as string));
   };
 
-  const filteredReviews = reviews?.filter((review) => (review?.id) !== id);
-
+ 
   return (
     <div className='row row-cols-3 mb-2'>
-      {filteredReviews.map((review) => {
+      {reviews?.map((review) => {
         return (
           <div
             key={review?.id}

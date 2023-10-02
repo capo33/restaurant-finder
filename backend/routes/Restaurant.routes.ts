@@ -11,6 +11,6 @@ router.put("/:id", RestaurantController.updateRestaurant);
 router.delete("/:id", RestaurantController.deleteRestaurant);
 router.post("/:id/addReview", RestaurantController.addReview);
 router.put("/:id/updateReview", RestaurantController.updateReview);
-router.delete("/:id/deleteReview", RestaurantController.deleteReview);
+router.delete("/deleteReview/:id", RestaurantController.deleteReview);
 
 export default router;

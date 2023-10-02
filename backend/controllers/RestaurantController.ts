@@ -9,13 +9,13 @@ import { pool } from "../db";
 const getRestaurants = async (req: Request, res: Response) => {
   try {
     const restaurants: QueryResult = await pool.query(
-      "SELECT * FROM restaurants LEFT JOIN (SELECT restaurant_id, COUNT(*), TRUNC(AVG(rating),1) AS average_rating FROM reviews GROUP BY restaurant_id) reviews ON restaurants.id = reviews.restaurant_id;"
+      "SELECT * FROM restaurants LEFT JOIN (SELECT restaurant_id, COUNT(*), TRUNC(AVG(rating), 1) AS average_rating FROM reviews GROUP BY restaurant_id) reviews ON restaurants.id = reviews.restaurant_id"
     );
     res.status(200).json({
       status: "success",
       results: restaurants.rows.length,
       data: {
-        restaurants: restaurants.rows,
+        restaurants: restaurants["rows"],
       },
     });
   } catch (error) {
@@ -37,7 +37,7 @@ const getRestaurant = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const restaurant: QueryResult = await pool.query(
-      "SELECT * FROM restaurants LEFT JOIN (SELECT restaurant_id, COUNT(*), TRUNC(AVG(rating),1) AS average_rating FROM reviews GROUP BY restaurant_id) reviews ON restaurants.id = reviews.restaurant_id WHERE id = $1;",
+      "SELECT * FROM restaurants LEFT JOIN (SELECT restaurant_id, COUNT(*), TRUNC(AVG(rating), 1) AS average_rating FROM reviews GROUP BY restaurant_id) reviews ON restaurants.id = reviews.restaurant_id WHERE id = $1",
       [id]
     );
 
@@ -49,7 +49,7 @@ const getRestaurant = async (req: Request, res: Response) => {
     res.status(200).json({
       status: "success",
       data: {
-        restaurant: restaurant.rows[0],
+        restaurant: restaurant["rows"][0],
         reviews: reviews.rows,
       },
     });
@@ -71,14 +71,14 @@ const getRestaurant = async (req: Request, res: Response) => {
 const addRestaurant = async (req: Request, res: Response) => {
   const { name, location, price_range } = req.body;
   try {
-    const restaurant: QueryResult = await pool.query(
+    const newRestaurant: QueryResult = await pool.query(
       "INSERT INTO restaurants (name, location, price_range) VALUES ($1, $2, $3) RETURNING *;",
       [name, location, price_range]
     );
     res.status(201).json({
       status: "success",
       data: {
-        restaurant: restaurant["rows"][0],
+        restaurant: newRestaurant["rows"][0],
       },
     });
   } catch (error) {
@@ -97,11 +97,11 @@ const addRestaurant = async (req: Request, res: Response) => {
 // @route  PUT /api/v1/restaurants/:id
 // @access Public
 const updateRestaurant = async (req: Request, res: Response) => {
-  const { name, location, price_range } = req.body;
   const { id } = req.params;
+  const { name, location, price_range } = req.body;
   try {
     const restaurant: QueryResult = await pool.query(
-      "UPDATE restaurants SET name = $1, location = $2, price_range = $3 WHERE id = $4 RETURNING *;",
+      "UPDATE restaurants SET name = $1, location = $2, price_range = $3 WHERE id = $4 RETURNING *",
       [name, location, price_range, id]
     );
     res.status(200).json({
@@ -134,6 +134,7 @@ const deleteRestaurant = async (req: Request, res: Response) => {
     );
     res.status(200).json({
       status: "success",
+      data: null,
       // data: {
       //   restaurant: restaurant["rows"][0],
       // },
@@ -158,7 +159,7 @@ const addReview = async (req: Request, res: Response) => {
   const { name, review, rating } = req.body;
   try {
     const newReview: QueryResult = await pool.query(
-      "INSERT INTO reviews (restaurant_id, name, review, rating) VALUES ($1, $2, $3, $4) RETURNING *;",
+      "INSERT INTO reviews (restaurant_id, name, review, rating) VALUES ($1, $2, $3, $4) RETURNING *",
       [id, name, review, rating]
     );
     res.status(201).json({
@@ -179,6 +180,7 @@ const addReview = async (req: Request, res: Response) => {
   }
 };
 
+ 
 // @desc   Update a review
 // @route  PUT /api/v1/restaurants/:id/updateReview
 // @access Public
@@ -220,11 +222,12 @@ const deleteReview = async (req: Request, res: Response) => {
     );
     res.status(200).json({
       status: "success",
-      // data: {
-      //   review: deletedReview["rows"][0],
-      // },
+      data: {
+        review: deletedReview["rows"][0],
+      },
     });
-  } catch (error) {
+  }    
+  catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
       res.status(500).json({
@@ -232,9 +235,10 @@ const deleteReview = async (req: Request, res: Response) => {
         message: "Internal Server Error",
         error: error.message,
       });
-    }
+    }    
   }
-};
+}
+
 export {
   getRestaurants,
   getRestaurant,
@@ -242,6 +246,6 @@ export {
   updateRestaurant,
   deleteRestaurant,
   addReview,
-  updateReview,
+   updateReview,
   deleteReview,
 };
