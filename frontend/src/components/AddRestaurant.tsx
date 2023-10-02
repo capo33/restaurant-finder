@@ -41,7 +41,7 @@ const AddRestaurant = () => {
               size={10}
             />
           </div>
-          <div className='col-32 m-2'>
+          <div className='col-2 m-2'>
             <select
               className='form-select mr-sm-2'
               value={data.price_range}
@@ -58,7 +58,7 @@ const AddRestaurant = () => {
             </select>
           </div>
           <div className='col m-2'>
-            <button className='btn btn-primary '>Add</button>
+            <button className='btn btn-primary w-100'>Add</button>
           </div>
         </div>
       </form>
