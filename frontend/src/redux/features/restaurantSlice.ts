@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import restaurantServices from "./restaurantServices";
-import { IRestaurants, IReviews, IUpdateRestaurants } from "../../interfaces/restaurantsInterface";
+import {
+  IRestaurants,
+  IReviews,
+  IUpdateORADDRestaurants,
+} from "../../interfaces/restaurantsInterface";
 
 interface IRestaurantState {
   restaurants: IRestaurants[];
@@ -21,7 +25,7 @@ const initialState: IRestaurantState = {
   restaurants: [],
   restaurant: {
     restaurant: {
-      id: 0,
+      id: "",
       name: "",
       location: "",
       price_range: 0,
@@ -89,7 +93,7 @@ export const getSingleRestaurant = createAsyncThunk(
 export const updateRestaurant = createAsyncThunk(
   "restaurants/updateRestaurant",
   async (
-    { id, data }: { id: string; data: IUpdateRestaurants },
+    { id, data }: { id: string; data: IUpdateORADDRestaurants },
     { rejectWithValue }
   ) => {
     try {
@@ -114,9 +118,10 @@ export const updateRestaurant = createAsyncThunk(
 // Delete a restaurant
 export const deleteRestaurant = createAsyncThunk(
   "restaurants/deleteRestaurant",
-  async (id: string, { rejectWithValue }) => {
+  async (id: string, thunkAPI) => {
     try {
       const response = await restaurantServices.deleteRestaurant(id);
+      thunkAPI.dispatch(getAllRestaurants());
       return response;
     } catch (error) {
       const axiosError = error as {
@@ -129,7 +134,7 @@ export const deleteRestaurant = createAsyncThunk(
           axiosError.response.data.message) ||
         axiosError.message ||
         axiosError.toString();
-      return rejectWithValue(message);
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -137,9 +142,10 @@ export const deleteRestaurant = createAsyncThunk(
 // Add a restaurant
 export const addRestaurant = createAsyncThunk(
   "restaurants/addRestaurant",
-  async (restaurant: IRestaurants, { rejectWithValue }) => {
+  async (restaurant: IUpdateORADDRestaurants, thunkAPI) => {
     try {
       const response = await restaurantServices.addRestaurant(restaurant);
+      thunkAPI.dispatch(getAllRestaurants());
       return response;
     } catch (error) {
       const axiosError = error as {
@@ -152,7 +158,7 @@ export const addRestaurant = createAsyncThunk(
           axiosError.response.data.message) ||
         axiosError.message ||
         axiosError.toString();
-      return rejectWithValue(message);
+      return thunkAPI.rejectWithValue(message);
     }
   }
 );
@@ -213,7 +219,6 @@ export const deleteReview = createAsyncThunk(
   async (id: string, thunkAPI) => {
     try {
       const response = await restaurantServices.deleteReview(id);
-      console.log("responsealalal", response);
       // thunkAPI.dispatch(getReview(id));
       return response;
     } catch (error) {
@@ -295,7 +300,7 @@ const restaurantSlice = createSlice({
     builder.addCase(deleteRestaurant.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.restaurant = payload;
+      state.restaurants = payload;
     });
     builder.addCase(deleteRestaurant.rejected, (state, { payload }) => {
       state.isLoading = false;
@@ -353,14 +358,9 @@ const restaurantSlice = createSlice({
       state.isLoading = true;
     });
     builder.addCase(deleteReview.fulfilled, (state, { payload }) => {
-      console.log("payloadssbbbbbbbb", payload);
-
       state.isLoading = false;
       state.isSuccess = true;
-      const index = state.restaurant?.reviews.findIndex(
-        (review) => review.id === payload.id
-      );
-      state.restaurant?.reviews.splice(index, 1);
+      state.restaurant.reviews = payload;
     });
     builder.addCase(deleteReview.rejected, (state, { payload }) => {
       state.isLoading = false;

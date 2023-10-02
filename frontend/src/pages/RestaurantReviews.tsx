@@ -9,6 +9,7 @@ interface IRestaurantReviewsProps {
 
 const RestaurantReviews = ({ reviews }: IRestaurantReviewsProps) => {
   const dispatch = useAppDispatch();
+
   // delete review
   const handleDelete = (id: string) => {
     dispatch(deleteReview(id as string));

@@ -1,15 +1,18 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import StarRating from "./StarRatings";
 import { useAppDispatch, useAppSelector } from "../redux/app/store";
-import { getAllRestaurants } from "../redux/features/restaurantSlice";
+import {
+  deleteRestaurant,
+  getAllRestaurants,
+} from "../redux/features/restaurantSlice";
 import { IRestaurants } from "../interfaces/restaurantsInterface";
 import { price_rating } from "../utils";
 
 const RestaurantList = () => {
   const { restaurants } = useAppSelector((state) => state.restaurants);
- 
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -30,20 +33,11 @@ const RestaurantList = () => {
     );
   };
 
-  // update restaurant
-  const handleUpdateRestaurant = (e: React.MouseEvent, id: number) => {
-    e.stopPropagation();
-    navigate(`/restaurants/${id}/update`);
+  // delete restaurant
+  const handleDelete = (id: string) => {
+    dispatch(deleteRestaurant(id));
+    navigate("/");
   };
-
-  // select restaurant
-  const handleSelectRestaurant = (id: number) => {
-    navigate(`/restaurants/${id}`);
-  };
-
-    // delete restaurant
-  // const handleDelete = ( id: number) => {
-  // }
 
   return (
     <div className='list-group'>
@@ -69,29 +63,27 @@ const RestaurantList = () => {
                   <td> {price_rating(restaurant?.price_range)}</td>
                   <td>{renderRating(restaurant)}</td>
                   <td>
-                    <button
-                      onClick={() => handleSelectRestaurant(restaurant?.id)}
+                    <Link
+                      to={`/restaurants/${restaurant?.id}`}
                       className='btn btn-info btn-sm'
                     >
                       Edit
-                    </button>
+                    </Link>
                   </td>
                   <td>
-                    <button
-                      onClick={(e) => handleUpdateRestaurant(e, restaurant?.id)}
+                    <Link
+                      to={`/restaurants/${restaurant?.id}/update`}
                       className='btn btn-warning btn-sm'
                     >
                       Update
-                    </button>
+                    </Link>
                   </td>
 
                   <td>
                     {restaurant?.count > 0 ? (
                       <div title='restaurant with reviews cannot be deleted'>
                         <button
-                          // onClick={(e) => {
-                          //   handleDelete(e, restaurant?.restaurant?.restaurant.id);
-                          // }}
+                          onClick={() => handleDelete(restaurant?.id as string)}
                           className='btn btn-danger btn-sm'
                           disabled
                         >
@@ -100,9 +92,7 @@ const RestaurantList = () => {
                       </div>
                     ) : (
                       <button
-                        // onClick={(e) => {
-                        //   handleDelete(e, restaurant?.restaurant?.restaurant.id);
-                        // }}
+                        onClick={() => handleDelete(restaurant?.id as string)}
                         className='btn btn-danger btn-sm'
                       >
                         Delete

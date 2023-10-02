@@ -1,4 +1,4 @@
-import { RestaurantList } from "../components";
+import { AddRestaurant, RestaurantList } from "../components";
 
 const Home = () => {
   return (
@@ -6,6 +6,7 @@ const Home = () => {
       <h1 className='font-weight-light text-center display-1'>
         Restaurant Finder
       </h1>
+      <AddRestaurant />
       <RestaurantList />
     </div>
   );

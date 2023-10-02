@@ -1,7 +1,10 @@
 import axios from "axios";
 
 import { API_URL } from "../../constants/constants";
-import { IRestaurants, IReviews, IUpdateRestaurants } from "../../interfaces/restaurantsInterface";
+import {
+  IReviews,
+  IUpdateORADDRestaurants,
+} from "../../interfaces/restaurantsInterface";
 
 // ***************************** RESTAURANT SERVICES ***************************** //
 // Get all restaurants
@@ -17,7 +20,7 @@ const getRestaurant = async (id: string) => {
 };
 
 // Update a restaurant
-const updateRestaurant = async (id: string, data: IUpdateRestaurants) => {
+const updateRestaurant = async (id: string, data: IUpdateORADDRestaurants) => {
   const response = await axios.put(`${API_URL}/${id}`, data);
   return response.data.data.restaurant;
 };
@@ -25,11 +28,11 @@ const updateRestaurant = async (id: string, data: IUpdateRestaurants) => {
 // Delete a restaurant
 const deleteRestaurant = async (id: string) => {
   const response = await axios.delete(`${API_URL}/${id}`);
-  return response.data.data;
+  return response.data.data.restaurant;
 };
 
 // Add a restaurant
-const addRestaurant = async (restaurant: IRestaurants) => {
+const addRestaurant = async (restaurant: IUpdateORADDRestaurants) => {
   const response = await axios.post(API_URL, restaurant);
   return response.data.data.restaurant;
 };
@@ -38,8 +41,6 @@ const addRestaurant = async (restaurant: IRestaurants) => {
 // Add a review
 const addReview = async (id: string, review: IReviews) => {
   const response = await axios.post(`${API_URL}/${id}/addReview`, review);
-  console.log("response", response);
-
   return response.data.data.review;
 };
 
@@ -52,10 +53,6 @@ const updateReview = async (id: string, review: IReviews) => {
 // Delete a review
 const deleteReview = async (id: string) => {
   const response = await axios.delete(`${API_URL}/deleteReview/${id}`);
-  console.log("response", response);
-  console.log("response?.data", response?.data);
-  console.log("response?.data?.data", response?.data?.data);
-
   return response.data.data.review;
 };
 

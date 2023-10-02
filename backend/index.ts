@@ -13,7 +13,7 @@ import restaurantsRouter from "./routes/Restaurant.routes";
 const app: Application = express();
 
 // Port number is set in the .env file
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 5000;
 
 // Middleware & Enable CORS
 app.use(cors());

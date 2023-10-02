@@ -129,15 +129,14 @@ const deleteRestaurant = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
     const restaurant: QueryResult = await pool.query(
-      "DELETE FROM restaurants WHERE id = $1 RETURNING *;",
+      "DELETE FROM restaurants WHERE id = $1",
       [id]
     );
     res.status(200).json({
       status: "success",
-      data: null,
-      // data: {
-      //   restaurant: restaurant["rows"][0],
-      // },
+      data: {
+        restaurant: restaurant["rows"][0],
+      },
     });
   } catch (error) {
     if (error instanceof Error) {
@@ -180,7 +179,6 @@ const addReview = async (req: Request, res: Response) => {
   }
 };
 
- 
 // @desc   Update a review
 // @route  PUT /api/v1/restaurants/:id/updateReview
 // @access Public
@@ -226,8 +224,7 @@ const deleteReview = async (req: Request, res: Response) => {
         review: deletedReview["rows"][0],
       },
     });
-  }    
-  catch (error) {
+  } catch (error) {
     if (error instanceof Error) {
       console.log(error.message);
       res.status(500).json({
@@ -235,9 +232,9 @@ const deleteReview = async (req: Request, res: Response) => {
         message: "Internal Server Error",
         error: error.message,
       });
-    }    
+    }
   }
-}
+};
 
 export {
   getRestaurants,
@@ -246,6 +243,6 @@ export {
   updateRestaurant,
   deleteRestaurant,
   addReview,
-   updateReview,
+  updateReview,
   deleteReview,
 };

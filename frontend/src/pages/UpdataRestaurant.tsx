@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-import { IUpdateRestaurants } from "../interfaces/restaurantsInterface";
+import { IUpdateORADDRestaurants } from "../interfaces/restaurantsInterface";
 import { useAppSelector, useAppDispatch } from "../redux/app/store";
 import {
   getSingleRestaurant,
@@ -12,10 +12,10 @@ export const UpdataRestaurant = () => {
   const { id } = useParams<{ id: string }>();
   const { restaurant } = useAppSelector((state) => state.restaurants);
 
-  const [data, setData] = useState<IUpdateRestaurants>({
-    name: "",
-    location: "",
-    price_range: 0,
+  const [data, setData] = useState<IUpdateORADDRestaurants>({
+    name: restaurant?.restaurant?.name || "",
+    location: restaurant?.restaurant?.location || "",
+    price_range: restaurant?.restaurant?.price_range || 0,
   });
 
   const dispatch = useAppDispatch();

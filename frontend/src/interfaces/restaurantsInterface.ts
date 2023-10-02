@@ -1,5 +1,5 @@
 export interface IRestaurants {
-  id?: number;
+  id?: string;
   name: string;
   location: string;
   price_range: number;
@@ -8,7 +8,7 @@ export interface IRestaurants {
   average_rating: number;
 }
 
-export interface IUpdateRestaurants {
+export interface IUpdateORADDRestaurants {
   id?: number;
   name: string;
   location: string;
