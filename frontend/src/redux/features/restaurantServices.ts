@@ -1,7 +1,7 @@
 import axios from "axios";
 
 import { API_URL } from "../../constants/constants";
-import { IRestaurants, IReviews } from "../../interfaces/restaurantsInterface";
+import { IRestaurants, IReviews, IUpdateRestaurants } from "../../interfaces/restaurantsInterface";
 
 // ***************************** RESTAURANT SERVICES ***************************** //
 // Get all restaurants
@@ -17,7 +17,7 @@ const getRestaurant = async (id: string) => {
 };
 
 // Update a restaurant
-const updateRestaurant = async (id: string, data: IRestaurants) => {
+const updateRestaurant = async (id: string, data: IUpdateRestaurants) => {
   const response = await axios.put(`${API_URL}/${id}`, data);
   return response.data.data.restaurant;
 };

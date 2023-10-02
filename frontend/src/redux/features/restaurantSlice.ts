@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 import restaurantServices from "./restaurantServices";
-import { IRestaurants, IReviews } from "../../interfaces/restaurantsInterface";
+import { IRestaurants, IReviews, IUpdateRestaurants } from "../../interfaces/restaurantsInterface";
 
 interface IRestaurantState {
   restaurants: IRestaurants[];
@@ -88,12 +88,12 @@ export const getSingleRestaurant = createAsyncThunk(
 // Update a restaurant
 export const updateRestaurant = createAsyncThunk(
   "restaurants/updateRestaurant",
-  async (data: IRestaurants, { rejectWithValue }) => {
+  async (
+    { id, data }: { id: string; data: IUpdateRestaurants },
+    { rejectWithValue }
+  ) => {
     try {
-      const response = await restaurantServices.updateRestaurant(
-        data?.restaurant_id,
-        data
-      );
+      const response = await restaurantServices.updateRestaurant(id, data);
       return response;
     } catch (error) {
       const axiosError = error as {

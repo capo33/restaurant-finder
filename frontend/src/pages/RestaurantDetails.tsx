@@ -8,15 +8,13 @@ import RestaurantReviews from "./RestaurantReviews";
 import AddReview from "./AddReview";
 
 const RestaurantDetails = () => {
-  const { id:something } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
   const { restaurant } = useAppSelector((state) => state.restaurants);
-   console.log('restaurant',restaurant?.restaurant?.restaurant_id);
-   
 
   useEffect(() => {
-    dispatch(getSingleRestaurant(something as string));
-  }, [dispatch, something]);
+    dispatch(getSingleRestaurant(id as string));
+  }, [dispatch, id]);
 
   return (
     <div className='container'>
@@ -38,12 +36,14 @@ const RestaurantDetails = () => {
           </div>
           <Link to='/'>Back</Link>
           <div className='mt-3'>
-            {/* {reviews?.length && <h1>No Reviews Yet</h1>} */}
-            <RestaurantReviews
-              something={something}
-              reviews={restaurant?.reviews}
-            />
-            <AddReview id={something} />
+            {restaurant?.reviews?.length === 0 && (
+              <div className='alert alert-warning text-center'>
+                No reviews, be the first to review!
+              </div>
+            )}
+
+            <RestaurantReviews reviews={restaurant?.reviews} />
+            <AddReview id={id} />
           </div>
         </>
       )}

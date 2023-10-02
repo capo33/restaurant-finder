@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { useAppDispatch } from "../redux/app/store";
 import { IReviews } from "../interfaces/restaurantsInterface";
@@ -10,26 +9,17 @@ interface IAddReviewProps {
 }
 const AddReview = ({ id }: IAddReviewProps) => {
   const [review, setReview] = useState<IReviews>({
-    id: id ,
     name: "",
     rating: "",
     review: "",
   });
-  console.log('revieeeeeeeeeeeew',review.id);
-  console.log('idddddd',id);
-  
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   // submit review
   const handleSubmitReview = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("id", id);
-    console.log("review", review.id);
-
     dispatch(addReview({ id: id as string, review }));
-    navigate(`/restaurants/${id}`);
     setReview({
       id: id,
       name: "",
