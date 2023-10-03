@@ -3,10 +3,9 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
+
 import App from "../App";
-import Home from "../pages/Home";
-import RestaurantDetails from "../pages/RestaurantDetails";
-import { UpdataRestaurant } from "../pages/UpdataRestaurant";
+import { Home, UpdataRestaurant, RestaurantDetails } from "../pages";
 
 const routes = createBrowserRouter(
   createRoutesFromElements(

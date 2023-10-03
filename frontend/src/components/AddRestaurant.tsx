@@ -16,8 +16,8 @@ const AddRestaurant = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch(addRestaurant(data));
-    console.log(data);
-  };
+    setData({ name: "", location: "", price_range: 0 });
+   };
   return (
     <div className='mb-4'>
       <form onSubmit={handleSubmit}>

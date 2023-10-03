@@ -360,7 +360,10 @@ const restaurantSlice = createSlice({
     builder.addCase(deleteReview.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.isSuccess = true;
-      state.restaurant.reviews = payload;
+       
+      state.restaurant.reviews = state.restaurant.reviews.filter(
+        (review) => review.id !== payload.id
+      );
     });
     builder.addCase(deleteReview.rejected, (state, { payload }) => {
       state.isLoading = false;

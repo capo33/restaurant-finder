@@ -3,14 +3,13 @@ import { Link, useParams } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "../redux/app/store";
 import { getSingleRestaurant } from "../redux/features/restaurantSlice";
-import { StarRatings } from "../components";
-import RestaurantReviews from "./RestaurantReviews";
-import AddReview from "./AddReview";
+import { AddReview, StarRatings, RestaurantReviews } from "../components";
 
 const RestaurantDetails = () => {
   const { id } = useParams<{ id: string }>();
-  const dispatch = useAppDispatch();
   const { restaurant } = useAppSelector((state) => state.restaurants);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(getSingleRestaurant(id as string));

@@ -8,7 +8,7 @@ import {
   updateRestaurant,
 } from "../redux/features/restaurantSlice";
 
-export const UpdataRestaurant = () => {
+const UpdataRestaurant = () => {
   const { id } = useParams<{ id: string }>();
   const { restaurant } = useAppSelector((state) => state.restaurants);
 
@@ -101,3 +101,5 @@ export const UpdataRestaurant = () => {
     </div>
   );
 };
+
+export default UpdataRestaurant;
