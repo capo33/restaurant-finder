@@ -1,7 +1,7 @@
 type StarRatingProps = {
   rating: number;
 };
-const StarRating = ({ rating }: StarRatingProps) => {
+const StarRatings = ({ rating }: StarRatingProps) => {
   const stars = [];
   for (let i = 1; i <= 5; i++) {
     if (i <= rating) {
@@ -18,4 +18,4 @@ const StarRating = ({ rating }: StarRatingProps) => {
   return <>{stars}</>;
 };
 
-export default StarRating;
+export default StarRatings;

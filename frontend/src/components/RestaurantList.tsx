@@ -1,14 +1,16 @@
 import { useEffect } from "react";
+import { AiOutlineEdit } from "react-icons/ai";
 import { useNavigate, Link } from "react-router-dom";
+import { MdOutlineStarRate, MdDeleteOutline } from "react-icons/md";
 
-import StarRating from "./StarRatings";
-import { useAppDispatch, useAppSelector } from "../redux/app/store";
+import { StarRatings } from "./";
+import { price_rating } from "../utils";
 import {
   deleteRestaurant,
   getAllRestaurants,
 } from "../redux/features/restaurantSlice";
 import { IRestaurants } from "../interfaces/restaurantsInterface";
-import { price_rating } from "../utils";
+import { useAppDispatch, useAppSelector } from "../redux/app/store";
 
 const RestaurantList = () => {
   const { restaurants } = useAppSelector((state) => state.restaurants);
@@ -23,11 +25,11 @@ const RestaurantList = () => {
   // Render Rating component
   const renderRating = (restaurant: IRestaurants) => {
     if (!restaurant?.count) {
-      return <span className='text-warning'>0 reviews</span>;
+      return <span className='text-secondary'>0 reviews</span>;
     }
     return (
       <>
-        <StarRating rating={restaurant?.average_rating} />
+        <StarRatings rating={restaurant?.average_rating} />
         <span className='text-muted ms-1'>({restaurant?.count})</span>
       </>
     );
@@ -48,7 +50,7 @@ const RestaurantList = () => {
             <th>Location</th>
             <th>Price Range</th>
             <th>Rating</th>
-            <th>Edit</th>
+            <th>Rate</th>
             <th>Update</th>
             <th>Delete</th>
           </tr>
@@ -65,37 +67,33 @@ const RestaurantList = () => {
                   <td>
                     <Link
                       to={`/restaurants/${restaurant?.id}`}
-                      className='btn btn-info btn-sm'
+                      className='btn btn-sm outline-none'
                     >
-                      Edit
+                      <MdOutlineStarRate size={25} color='orange' />
                     </Link>
                   </td>
                   <td>
                     <Link
                       to={`/restaurants/${restaurant?.id}/update`}
-                      className='btn btn-warning btn-sm'
+                      className='btn btn-sm outline-none'
                     >
-                      Update
+                      <AiOutlineEdit size={25} color='blue' />
                     </Link>
                   </td>
 
                   <td>
                     {restaurant?.count > 0 ? (
                       <div title='restaurant with reviews cannot be deleted'>
-                        <button
-                          onClick={() => handleDelete(restaurant?.id as string)}
-                          className='btn btn-danger btn-sm'
-                          disabled
-                        >
-                          Delete
+                        <button className='btn btn-outline-secondary' disabled>
+                          <MdDeleteOutline size={25} color='red' />
                         </button>
                       </div>
                     ) : (
                       <button
                         onClick={() => handleDelete(restaurant?.id as string)}
-                        className='btn btn-danger btn-sm'
+                        className='btn btn-sm outline-none'
                       >
-                        Delete
+                        <MdDeleteOutline size={25} color='red' />
                       </button>
                     )}
                   </td>
