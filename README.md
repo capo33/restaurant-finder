@@ -7,11 +7,13 @@
 
 ## Tech
 
-- Frontend
+# Frontend
 - [React]
+- [Redux]
 - [Typescript]
+- [Redux-Toolkit]
 
-- Backend
+# Backend
 - [node.js]
 - [Express]
 - [postgreSQL]
@@ -22,3 +24,5 @@
   [express]: http://expressjs.com
   [postgreSQL]: https://www.postgresql.org/
   [Typescript]: https://www.typescriptlang.org/
+  [Redux]: https://redux.js.org/tutorials/typescript-quick-start/
+  [Redux-Toolkit]: https://redux-toolkit.js.org/
