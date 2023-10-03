@@ -7,13 +7,13 @@
 
 ## Tech
 
-# Frontend
+### Frontend
 - [React]
 - [Redux]
 - [Typescript]
 - [Redux-Toolkit]
 
-# Backend
+### Backend
 - [node.js]
 - [Express]
 - [postgreSQL]
