@@ -18,6 +18,7 @@ const AddRestaurant = () => {
     dispatch(addRestaurant(data));
     setData({ name: "", location: "", price_range: 0 });
    };
+
   return (
     <div className='mb-4'>
       <form onSubmit={handleSubmit}>
@@ -58,7 +59,7 @@ const AddRestaurant = () => {
             </select>
           </div>
           <div className='col m-2'>
-            <button className='btn btn-primary w-100'>Add</button>
+            <button className='btn btn-primary w-100'>Add Restaurant</button>
           </div>
         </div>
       </form>

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
 import { Link, useParams, useNavigate } from "react-router-dom";
 
-import { IUpdateORADDRestaurants } from "../interfaces/restaurantsInterface";
-import { useAppSelector, useAppDispatch } from "../redux/app/store";
 import {
   getSingleRestaurant,
   updateRestaurant,
 } from "../redux/features/restaurantSlice";
+import { useAppSelector, useAppDispatch } from "../redux/app/store";
+import { IUpdateORADDRestaurants } from "../interfaces/restaurantsInterface";
 
 const UpdataRestaurant = () => {
   const { id } = useParams<{ id: string }>();
@@ -46,17 +47,21 @@ const UpdataRestaurant = () => {
     );
     navigate("/");
   };
+
   return (
     <div className='container'>
-      <h1 className='text-center display-1'>Update Restaurant</h1>
-      <Link to='/'>Back</Link>
+      <h1 className='text-center display-1 mt-5'>Update Restaurant</h1>
+      <Link to='/'>
+        <IoArrowBackCircleSharp size={30} />
+      </Link>
+
       <div className='mt-3'>
         <form onSubmit={handleSubmit}>
           <div className='form-group'>
             <label htmlFor='name'>Name</label>
             <input
               id='name'
-              className='form-control'
+              className='form-control mb-2'
               type='text'
               value={data.name as string}
               onChange={(e) => setData({ ...data, name: e.target.value })}
@@ -66,7 +71,7 @@ const UpdataRestaurant = () => {
             <label htmlFor='location'>Location</label>
             <input
               id='location'
-              className='form-control'
+              className='form-control mb-2'
               type='text'
               value={data.location as string}
               onChange={(e) => setData({ ...data, location: e.target.value })}
@@ -75,7 +80,7 @@ const UpdataRestaurant = () => {
           <div className='form-group'>
             <label htmlFor='price_range'>Price Range</label>
             <select
-              className='form-select   '
+              className='form-select mb-2'
               value={data.price_range as number}
               onChange={(e) =>
                 setData({ ...data, price_range: parseInt(e.target.value) })
@@ -89,12 +94,8 @@ const UpdataRestaurant = () => {
               <option value='5'>$$$$$</option>
             </select>
           </div>
-          <button
-            // onClick={handleSubmit}
-            className='btn btn-primary mt-3'
-            type='submit'
-          >
-            Submit
+          <button className='btn btn-primary' type='submit'>
+            Update Restaurant
           </button>
         </form>
       </div>

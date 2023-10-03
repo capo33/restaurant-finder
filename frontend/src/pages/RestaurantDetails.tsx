@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
+import { IoArrowBackCircleSharp } from "react-icons/io5";
 
 import { useAppSelector, useAppDispatch } from "../redux/app/store";
 import { getSingleRestaurant } from "../redux/features/restaurantSlice";
@@ -19,7 +20,7 @@ const RestaurantDetails = () => {
     <div className='container'>
       {restaurant && (
         <>
-          <h1 className='text-center display-1'>
+          <h1 className='text-center display-1 mt-5'>
             {restaurant?.restaurant?.name}
           </h1>
           <div className='text-center'>
@@ -33,7 +34,9 @@ const RestaurantDetails = () => {
               )
             </span>
           </div>
-          <Link to='/'>Back</Link>
+          <Link to='/'>
+            <IoArrowBackCircleSharp size={30} />
+          </Link>
           <div className='mt-3'>
             {restaurant?.reviews?.length === 0 && (
               <div className='alert alert-warning text-center'>

@@ -50,6 +50,7 @@ const AddReview = ({ id }: IAddReviewProps) => {
               className='form-select mb-sm-3'
               value={review.rating}
               onChange={(e) => setReview({ ...review, rating: e.target.value })}
+              required={true}
             >
               <option>Rating</option>
               <option value='1'>1</option>
